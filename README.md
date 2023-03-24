@@ -1,7 +1,7 @@
-# Timed Shutdown
+# Forceful Timer
 
-Forces shutdown once timer runs out or force quits specified applications if timer is interrupted.
-Plays sound notifications once timer is almost out.
+Forces shutdown once timer runs out or force quits specified applications if timer is
+interrupted. Plays sound notifications once timer is almost out.
 
 ## Motivation
 
@@ -19,25 +19,38 @@ it's meant as a timer that will force stop whatever you are doing.
 
 In order to use all features you need `wmctrl`. On **Debian** like systems run
 
-### Windows
-
-As of now, it's not fully supported. You can not use it to auto close applications.
-
 ```
 sudo apt install wmctrl
 ```
 
+### Windows
+
+As of now, it's not fully supported. You can not use it to auto close applications.
+
 ## Installtion
 
-To install, simple run
+If you have [pipx](https://pypa.github.io/pipx/), run
 
+```
+pipx install forceful-timer
+```
+
+otherwise you can just run
+
+```
+pip install forceful-timer
+```
 
 ## Usage
 
-To run the script with default settings you can execute
+To run the script with default settings, you can run
 
 ```
-python main.py
+forceful-timer
+
+OR
+
+ftimer
 ```
 
 which will shutdown the system after 60 minutes. The output will look something like this
@@ -46,9 +59,9 @@ which will shutdown the system after 60 minutes. The output will look something 
 Shutting down in:   0%|                        | 2/3600 [00:02<1:00:03,  1.00s/it]
 ```
 
-You can **cancel** the process with `CTRL + C`. In order to bind applications to the cancellation
-process you can add them via `-a <app_name>`. This will **close** the app if you cancel the
-shutdown. To list all running apps you can run `-l`.
+You can **cancel** the process with `CTRL + C`. In order to bind applications to the
+cancellation process you can add them via `-a <app_name>`. This will **close** the app if
+you cancel the shutdown. To list all running apps run `-l`.
 
 ```
 usage: main.py [-h] [-a APP] [-l] [--sound-theme {big-sur,chime,mario,material,pokemon,sonic,zelda}] [minutes]
@@ -68,17 +81,18 @@ options:
 
 ### Examples
 
-Let's say I want to play minecraft for 45 minutes and I am in a call with a friend.
-I could run
+Let's say I want to play minecraft for 45 minutes and I am in a call with a friend. I
+could run
 
 ```
 ftimer 45 -a minecraft -a discord
 ```
 
-which would bind both minecraft and discord to the cancellation process.
-If I cancel the shutdown process, both of them will be **closed**.
+which would bind both minecraft and discord to the cancellation process. If I cancel the
+shutdown process, both of them will be **closed**.
 
-Note that for this to work, both `minecraft` and `discord` need to be called this way. In order to get a list of running applications, run
+Note that for this to work, you will need to know the name of both `minecraft` and
+`discord`. In order to get a list of running applications, run
 
 ```
 ftimer -l
@@ -92,11 +106,13 @@ which will print out something like
 ('0x02e00003', 'forceful-timer · PyPI - Brave')
 ```
 
-you don't have to care about the first entry (it's mainly for debugging), all you have to care about is to match the name somewhat closely.
+you don't have to care about the first entry (it's mainly for debugging), all you have to
+care about is to match the name somewhat closely.
 
 ## Development
 
-If you want to contribute to this repo or simple want to develop your own repo locally, then you can install it through
+If you want to contribute to this repo or simple want to develop your own repo locally,
+install it through
 
 ### Linux
 
@@ -120,6 +136,7 @@ pip install -r requirements.txt
 pip install -e .
 ```
 
-once you installed and set up your virtual environment, you can use the script and make changes to it.
+once you installed and set up your virtual environment, you can use the script and make
+changes to it.
 
 To contribute, feel free to simple fork and open up a pull request.

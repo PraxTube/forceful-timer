@@ -8,7 +8,7 @@ long_description = (here / "README.md").read_text(encoding="utf-8")
 
 setup(
     name="forceful-timer",
-    version="0.1.0",
+    version="0.1.1",
     description=(
         "Forces shutdown once timer runs out or force quits "
         "specified applications if timer is interrupted."
@@ -51,7 +51,7 @@ setup(
     entry_points={
         "console_scripts": [
             "ftimer=forceful_timer:main.main",
-            "forceful_timer=forceful_timer:main.main",
+            "forceful-timer=forceful_timer:main.main",
         ],
     },
     project_urls={  # Optional
