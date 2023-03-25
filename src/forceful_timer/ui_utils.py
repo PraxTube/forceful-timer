@@ -10,6 +10,8 @@ def clear_terminal():
         subprocess.run("clear", shell=True)
     elif os_type() == "windows":
         subprocess.run("cls", shell=True)
+    elif os_type() == "darwin":
+        subprocess.run("clear", shell=True)
 
 
 def get_title() -> list:

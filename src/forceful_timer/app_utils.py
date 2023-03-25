@@ -11,7 +11,11 @@ def is_app_running(app_id: str) -> bool:
         app_ids = [x.split()[0] for x in get_running_apps_raw()]
         return app_id in app_ids
     elif os_type() == "windows":
-        raise NotImplementedError
+        output = subprocess.check_output(["tasklist"]).decode()
+        return app_id in [line.split()[1] for line in output.split("\n")[3:-1]]
+    elif os_type() == "darwin":
+        output = subprocess.check_output(["ps", "-A"]).decode()
+        return app_id in [line.split()[0] for line in output.split("\n")[1:-1]]
     return False
 
 
@@ -24,7 +28,13 @@ def get_running_apps_raw() -> list:
         decoded_output = subprocess.check_output(["wmctrl", "-l"])
         output = decoded_output.decode().split("\n")[:-1]
     elif os_type() == "windows":
-        raise NotImplementedError
+        output = subprocess.check_output(["tasklist"]).decode()
+        output = output.split("\n")[3:-1]
+        output = [line.split()[0:2] for line in output]
+    elif os_type() == "darwin":
+        output = subprocess.check_output(["ps", "-A"]).decode()
+        output = output.split("\n")[1:-1]
+        output = [line.split()[0:2] for line in output]
     return output
 
 
@@ -48,8 +58,8 @@ def get_running_apps() -> list:
     """
     if os_type() == "linux":
         apps = [extract_app_data_values(x) for x in get_running_apps_raw()]
-    elif os_type() == "windows":
-        raise NotImplementedError
+    elif os_type() == "windows" or os_type() == "darwin":
+        apps = [tuple(x) for x in get_running_apps_raw()]
     return apps
 
 

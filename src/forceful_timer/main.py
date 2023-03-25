@@ -59,6 +59,8 @@ def shutdown():
         subprocess.call(["shutdown", "now"])
     elif os_type() == "windows":
         subprocess.call(["shutdown", "/s", "/t", "0"])
+    elif os_type() == "darwin":
+        subprocess.call(["sudo", "shutdown", "-h", "now"])
 
 
 def cancel_shutdown(apps):
@@ -66,7 +68,14 @@ def cancel_shutdown(apps):
 
     for app in apps:
         if app_utils.is_app_running(app[0]):
-            subprocess.call(["wmctrl", "-i", "-c", app[0]])
+            if os_type() == "linux":
+                subprocess.call(["wmctrl", "-i", "-c", app[0]])
+            elif os_type() == "windows":
+                subprocess.call(["taskkill", "/F", "/IM", app[1]])
+            elif os_type() == "darwin":
+                subprocess.call(
+                    ["osascript", "-e", f"tell application {app[1]} to quit"]
+                )
             print("Terminating: {}".format(app))
         else:
             print("Skipping app, because it's not running anymore: {}".format(app))
