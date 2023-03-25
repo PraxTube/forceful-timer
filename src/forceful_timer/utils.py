@@ -2,7 +2,7 @@ import platform
 
 
 def check_os():
-    if os_type_str not in ["linux", "windows"]:
+    if os_type_str not in ["linux", "windows", "darwin"]:
         raise OSError("Your operating system is not supported!", os_type_str)
 
 
