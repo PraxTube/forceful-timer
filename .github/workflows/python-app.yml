@@ -30,7 +30,7 @@ jobs:
     - name: Lint with flake8
       run: |
         flake8 . --count --statistics --show-source
-    - name: Link Markdown
+    - name: Lint Markdown
       run: |
         mdformat . --wrap 90 --check
     - name: Build PyPi Package
